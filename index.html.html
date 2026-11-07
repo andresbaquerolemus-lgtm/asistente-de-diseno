@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asistente de Diseño</title>
+<style>
+:root{--ink:#20243a;--muted:#747b91;--bg:#f5f6fb;--purple:#6857d9;--line:#e7e8f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 Inter,system-ui,Arial,sans-serif;color:var(--ink)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:18px max(22px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:2}
+.brand{font-weight:800;font-size:20px}.brand span{color:var(--purple)}nav{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font:inherit;font-weight:650}nav button{background:transparent;color:var(--muted)}nav button.active, .primary{background:var(--purple);color:white}
+main{max-width:1120px;margin:30px auto;padding:0 22px}.hero{background:linear-gradient(120deg,#29284d,#6656cf);color:#fff;border-radius:22px;padding:30px;margin-bottom:22px}.hero h1{font-size:30px;margin:0 0 8px}.hero p{margin:0;color:#e5e3ff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.stat,.panel,.project{background:white;border:1px solid var(--line);border-radius:16px;padding:18px}.stat strong{display:block;font-size:26px}.muted{color:var(--muted)}.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel h2{margin:0 0 14px;font-size:19px}
+label{display:block;font-weight:650;margin:12px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid #dfe1eb;border-radius:9px;font:inherit;background:#fff}textarea{min-height:75px}
+.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.template{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;text-align:center}.template.selected{border-color:var(--purple);background:#f5f3ff}.swatch{height:56px;border-radius:8px;margin-bottom:8px}
+.preview{border-radius:15px;min-height:230px;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;overflow-wrap:anywhere}.preview h2{font-size:30px;margin:0 0 8px}.preview p{margin:0}
+.project-list{display:grid;gap:10px}.project{display:flex;justify-content:space-between;align-items:center;gap:12px}.tag{font-size:12px;border-radius:99px;padding:5px 9px;background:#eeeaff;color:#5544c3}
+.hidden{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.secondary{background:#efeff6;color:#454960}.notice{padding:12px;background:#f3f0ff;border-radius:10px;color:#5143ae;font-size:13px;margin-top:12px}
+footer{text-align:center;color:var(--muted);padding:28px;font-size:13px}
+@media(max-width:720px){header{align-items:flex-start;flex-direction:column}.stats{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.template-grid{grid-template-columns:1fr 1fr}.hero h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header><div class="brand">✦ <span>Asistente</span> de Diseño</div><nav>
+<button class="active" data-page="inicio">Inicio</button><button data-page="proyectos">Proyectos</button><button data-page="crear">Crear diseño</button><button data-page="clientes">Clientes</button><button data-page="entregas">Entregas</button>
+</nav></header>
+<main>
+<section id="inicio" class="page">
+<div class="hero"><h1>Ideas claras, diseños increíbles.</h1><p>Organiza proyectos, explora propuestas y da seguimiento a tus entregas desde un solo lugar.</p></div>
+<div class="stats"><div class="stat"><span class="muted">Proyectos</span><strong id="statProjects">0</strong><span class="muted">registrados</span></div><div class="stat"><span class="muted">Clientes</span><strong id="statClients">0</strong><span class="muted">registrados</span></div><div class="stat"><span class="muted">Entregas pendientes</span><strong id="statPending">0</strong><span class="muted">por completar</span></div></div>
+<div class="panel"><h2>Bienvenido/a</h2><p class="muted">Utiliza el menú para crear proyectos, registrar clientes, diseñar una propuesta visual y revisar el estado de las entregas.</p><button class="primary" onclick="showPage('crear')">Crear mi primer diseño</button></div>
+</section>
+<section id="proyectos" class="page hidden"><div class="panel"><h2>Mis proyectos</h2><p class="muted">Consulta y organiza tus trabajos.</p><div id="projectList" class="project-list"></div></div></section>
+<section id="crear" class="page hidden"><div class="hero"><h1>Crea una propuesta</h1><p>Personaliza una idea y visualiza una primera propuesta.</p></div><div class="layout">
+<div class="panel"><h2>1. Elige una plantilla</h2><div class="template-grid"><div class="template selected" data-color="#6656cf"><div class="swatch" style="background:linear-gradient(135deg,#6656cf,#a69af5)"></div><b>Moderna</b></div><div class="template" data-color="#168c85"><div class="swatch" style="background:linear-gradient(135deg,#168c85,#7bd3bf)"></div><b>Natural</b></div><div class="template" data-color="#d36b48"><div class="swatch" style="background:linear-gradient(135deg,#d36b48,#f5b58f)"></div><b>Creativa</b></div></div>
+<h2 style="margin-top:22px">2. Personaliza</h2><label for="designTitle">Título</label><input id="designTitle" value="Tu próxima gran idea"><label for="designSubtitle">Subtítulo</label><textarea id="designSubtitle">Diseñamos experiencias que inspiran.</textarea><label for="designType">Tipo de diseño</label><select id="designType"><option>Publicación para redes</option><option>Volante publicitario</option><option>Identidad de marca</option><option>Invitación</option></select><label for="fontChoice">Tipografía</label><select id="fontChoice"><option>Arial</option><option>Georgia</option><option>Trebuchet MS</option><option>Verdana</option></select><label for="projectName">Nombre del proyecto</label><input id="projectName" placeholder="Ej. Campaña de lanzamiento"><div class="actions"><button class="primary" id="saveProject">Guardar proyecto</button></div></div>
+<div class="panel"><h2>Vista previa</h2><div class="preview" id="preview" style="background:#6656cf"><h2 id="previewTitle">Tu próxima gran idea</h2><p id="previewSubtitle">Diseñamos experiencias que inspiran.</p></div><div class="notice">La vista previa es una maqueta inicial. Puedes ajustar el texto, la plantilla y la tipografía antes de guardar.</div></div>
+</div></section>
+<section id="clientes" class="page hidden"><div class="panel"><h2>Registrar cliente</h2><label>Nombre del cliente</label><input id="clientName" placeholder="Nombre completo o empresa"><label>Correo electrónico</label><input id="clientEmail" type="email" placeholder="correo@ejemplo.com"><label>Notas</label><textarea id="clientNotes" placeholder="Preferencias, necesidades o referencias"></textarea><button class="primary" id="saveClient">Guardar cliente</button><h2 style="margin-top:26px">Clientes registrados</h2><div id="clientList" class="project-list"></div></div></section>
+<section id="entregas" class="page hidden"><div class="panel"><h2>Seguimiento de entregas</h2><p class="muted">Actualiza el estado de cada proyecto.</p><div id="deliveryList" class="project-list"></div></div></section>
+</main><footer>Asistente de Diseño · Prototipo académico interactivo · Versión 1.0</footer>
+<script>
+const $=id=>document.getElementById(id);let projects=JSON.parse(localStorage.getItem('ad_projects')||'[]'),clients=JSON.parse(localStorage.getItem('ad_clients')||'[]');let chosenColor='#6656cf';
+function persist(){localStorage.setItem('ad_projects',JSON.stringify(projects));localStorage.setItem('ad_clients',JSON.stringify(clients));render()}
+function showPage(page){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==page));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));render()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+document.querySelectorAll('.template').forEach(t=>t.onclick=()=>{document.querySelectorAll('.template').forEach(x=>x.classList.remove('selected'));t.classList.add('selected');chosenColor=t.dataset.color;updatePreview()});
+function updatePreview(){$('preview').style.background=chosenColor;$('previewTitle').textContent=$('designTitle').value||'Tu título';$('previewSubtitle').textContent=$('designSubtitle').value;$('preview').style.fontFamily=$('fontChoice').value}
+['designTitle','designSubtitle','fontChoice'].forEach(id=>$(id).addEventListener('input',updatePreview));
+$('saveProject').onclick=()=>{const name=$('projectName').value.trim()||$('designTitle').value.trim()||'Nuevo proyecto';projects.push({name,type:$('designType').value,status:'En proceso',title:$('designTitle').value,subtitle:$('designSubtitle').value,color:chosenColor,font:$('fontChoice').value});$('projectName').value='';persist();showPage('proyectos')};
+$('saveClient').onclick=()=>{const name=$('clientName').value.trim();if(!name){alert('Escribe el nombre del cliente.');return}clients.push({name,email:$('clientEmail').value,notes:$('clientNotes').value});['clientName','clientEmail','clientNotes'].forEach(id=>$(id).value='');persist()};
+function render(){$('statProjects').textContent=projects.length;$('statClients').textContent=clients.length;$('statPending').textContent=projects.filter(p=>p.status!=='Entregado').length;
+$('projectList').innerHTML=projects.length?projects.map((p,i)=>`<div class="project"><div><b>${esc(p.name)}</b><div class="muted">${esc(p.type)}</div></div><span class="tag">${esc(p.status)}</span></div>`).join(''):'<p class="muted">Todavía no hay proyectos. Ve a “Crear diseño” para comenzar.</p>';
+$('clientList').innerHTML=clients.length?clients.map(c=>`<div class="project"><div><b>${esc(c.name)}</b><div class="muted">${esc(c.email||'Sin correo')}</div></div></div>`).join(''):'<p class="muted">Aún no has registrado clientes.</p>';
+$('deliveryList').innerHTML=projects.length?projects.map((p,i)=>`<div class="project"><div><b>${esc(p.name)}</b><div class="muted">${esc(p.type)}</div></div><select aria-label="Estado de ${esc(p.name)}" onchange="changeStatus(${i},this.value)">${['Pendiente','En proceso','En revisión','Entregado'].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}</select></div>`).join(''):'<p class="muted">No hay entregas para mostrar.</p>'}
+function changeStatus(i,s){projects[i].status=s;persist()}function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+render();updatePreview();
+</script></body></html>
